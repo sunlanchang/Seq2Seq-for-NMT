@@ -18,6 +18,7 @@ pandas
 ```shell
 python seq2seq_word_level_with_embedding
 ```
+![模型架构](img/model.png)
 
 
 ## 参考
