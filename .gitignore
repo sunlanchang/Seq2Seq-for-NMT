@@ -1,8 +1,10 @@
 checkpoint/*
 data/*
 !data/script/
+
 word2vec/*
 !word2vec/*.py
+!word2vec/glove.6B/*
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
