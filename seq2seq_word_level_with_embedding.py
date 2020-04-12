@@ -1,13 +1,10 @@
 # coding: utf-8
 # ### Neural Machine Translation using word level language model and embeddings in Keras
 import math
-import argparse
 import time
-import tensorflow as tf
 import keras.backend as K
 from keras.callbacks import ModelCheckpoint, LearningRateScheduler
 from zhon.hanzi import punctuation
-import ipdb
 from keras.utils import plot_model
 from keras.models import Model
 from keras.layers import Input, LSTM, Embedding, Dense
@@ -21,8 +18,8 @@ from sklearn.cross_validation import train_test_split
 
 UNIT_OUTPUT = 256
 SAMPLES = 10000
-EPOCH = 1000
-BATCH_SIZE = 256
+EPOCH = 500
+BATCH_SIZE = 32
 
 
 def createCmn():
@@ -325,12 +322,12 @@ if __name__ == "__main__":
 
     print('learning rate: ', K.eval(model.optimizer.lr))  # 学习率0.001
     # 加载模型的检查点
-    # model.load_weights('checkpoint/epoch_300.hdf5')  # slc
     # 数据量多的时候用fit_generator
     model.fit_generator(generate_batch(lines.eng, lines.zh, batch_size=BATCH_SIZE),
                         steps_per_epoch=lines.shape[0] // BATCH_SIZE,
                         epochs=EPOCH,
                         callbacks=[checkpoint, LearningRate])
+    # model.load_weights('checkpoint/epoch_400.hdf5')  # slc
 
     # 模型预测方法
     encoder_input_data = np.zeros((1, max_len_en), dtype='float32')
