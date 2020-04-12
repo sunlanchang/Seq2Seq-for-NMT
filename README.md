@@ -35,6 +35,7 @@ python seq2seq_word_level_with_embedding
 ## 其他参考
 
 - [真正的完全图解Seq2Seq Attention模型](https://zhuanlan.zhihu.com/p/40920384)
+- Tensorflow attention官方例子：[基于注意力的神经机器翻译](https://www.tensorflow.org/tutorials/text/nmt_with_attention)
 
 ## License
 
