@@ -32,6 +32,10 @@ python seq2seq_word_level_with_embedding
 - 中文预训练词向量下载：[Chinese Word Vectors 中文词向量(使用字向量)](https://github.com/Embedding/Chinese-Word-Vectors)
 - 训练翻译模型和训练词向量的数据集：[WMT 2020数据集](http://www.statmt.org/wmt20/translation-task.html)
 
+## 其他参考
+
+- [真正的完全图解Seq2Seq Attention模型](https://zhuanlan.zhihu.com/p/40920384)
+
 ## License
 
 MIT © Richard McRichface
