@@ -1,3 +1,5 @@
+#### NMT with Seq2Seq
+英文基于词，中文基于字的中英文翻译seq2seq模型。
 #### 参考
 - [Word Level English to Marathi Neural Machine Translation using Encoder-Decoder Model(生成器参考)](https://towardsdatascience.com/word-level-english-to-marathi-neural-machine-translation-using-seq2seq-encoder-decoder-lstm-model-1a913f2dc4a7)
 - [深度学习中Keras中的Embedding层的理解与使用](http://frankchen.xyz/2017/12/18/How-to-Use-Word-Embedding-Layers-for-Deep-Learning-with-Keras/)
