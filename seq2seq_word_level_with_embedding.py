@@ -18,7 +18,7 @@ from sklearn.cross_validation import train_test_split
 
 UNIT_OUTPUT = 256
 SAMPLES = 10000
-EPOCH = 500
+EPOCH = 1000
 BATCH_SIZE = 32
 
 
@@ -182,7 +182,7 @@ def createModel():
     embedding_matrix_en, embedding_matrix_zh = createEmbedding()
     en_x = Embedding(num_encoder_tokens, 300,
                      weights=[embedding_matrix_en],
-                     trainable=True)(encoder_inputs)
+                     trainable=False)(encoder_inputs)
     encoder = LSTM(UNIT_OUTPUT, return_state=True)
     encoder_outputs, state_h, state_c = encoder(en_x)
     # We discard `encoder_outputs` and only keep the states.
@@ -192,7 +192,7 @@ def createModel():
     decoder_inputs = Input(shape=(None,))
     embedding = Embedding(num_decoder_tokens, 300,
                           weights=[embedding_matrix_zh],
-                          trainable=True)
+                          trainable=False)
     final_dex = embedding(decoder_inputs)
     decoder_lstm = LSTM(UNIT_OUTPUT, return_sequences=True, return_state=True)
     decoder_outputs, _, _ = decoder_lstm(final_dex,
@@ -316,10 +316,11 @@ if __name__ == "__main__":
     plot_model(to_file='img/encoder.png', model=encoder_model)
     plot_model(to_file='img/decoder.png', model=decoder_model)
 
-    checkpoint = ModelCheckpoint("checkpoint/epoch_{epoch:02d}.hdf5", monitor='val_loss', verbose=0,
+    checkpoint = ModelCheckpoint("checkpoint/after500_epoch_{epoch:02d}.hdf5", monitor='val_loss', verbose=0,
                                  save_best_only=False, mode='auto', period=20)
     LearningRate = LearningRateScheduler(scheduler, verbose=0)
 
+    # model.load_weights('checkpoint/epoch_500.hdf5')  # slc
     print('learning rate: ', K.eval(model.optimizer.lr))  # 学习率0.001
     # 加载模型的检查点
     # 数据量多的时候用fit_generator
@@ -327,7 +328,6 @@ if __name__ == "__main__":
                         steps_per_epoch=lines.shape[0] // BATCH_SIZE,
                         epochs=EPOCH,
                         callbacks=[checkpoint, LearningRate])
-    # model.load_weights('checkpoint/epoch_400.hdf5')  # slc
 
     # 模型预测方法
     encoder_input_data = np.zeros((1, max_len_en), dtype='float32')
