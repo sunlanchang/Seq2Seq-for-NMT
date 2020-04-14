@@ -3,6 +3,8 @@
 英文基于词，中文基于字的中英文翻译seq2seq模型。
 ## Folder Description:
 ```
+# tree -L 1
+.
 ├── backup                                 # 备份权重
 ├── checkpoint                             # 训练时的权重
 ├── data                                   # 训练数据
