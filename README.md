@@ -1,6 +1,21 @@
 # NMT with Seq2Seq
 
 英文基于词，中文基于字的中英文翻译seq2seq模型。
+## Folder Description:
+```
+├── backup                                 # 备份权重
+├── checkpoint                             # 训练时的权重
+├── data                                   # 训练数据
+├── img                                    # 模型架构图
+├── lstm_seq2seq.py                        # 参考文件
+├── paper                                  # 参考文章
+├── README.md                              # README文件
+├── seq2seq_char_level_with_embedding.py   # 基于字符的翻译
+├── seq2seq_keras.ipynb                    # 参考文件
+├── seq2seq_keras.py                       # 参考文件
+├── seq2seq_word_level_with_embedding.py   # 主要训练文件
+└── word2vec                               # 生成词嵌入向量文件
+```
 
 ## Install
 
