@@ -1,5 +1,7 @@
+# %%
 # coding: utf-8
 # ### Neural Machine Translation using word level language model and embeddings in Keras
+from nltk.translate.bleu_score import sentence_bleu
 import math
 import time
 import keras.backend as K
@@ -332,13 +334,30 @@ if __name__ == "__main__":
     # 模型预测方法
     encoder_input_data = np.zeros((1, max_len_en), dtype='float32')
     cnt = 0
-    for _, input_text in enumerate(lines.eng):
+# %%
+    sum_score = 0
+    break_cnt = 100
+    for i, input_text in enumerate(lines.eng):
         for t, word in enumerate(input_text.split()):
             encoder_input_data[0, t] = input_token_index[word]
         decoded_sentence = decode_sequence(encoder_input_data)
+
+        reference = lines.zh[i].split()
+        reference = [reference[1:-1]]
+        candidate = [e for e in decoded_sentence]
+        score = sentence_bleu(reference, candidate,
+                              weights=(0.25, 0.25, 0.25, 0.25))
+        sum_score += score
         print('-')
         print('Input sentence:', input_text)
         print('Decoded sentence:', decoded_sentence)
+        print('BLEU score:', score)
         cnt += 1
-        if cnt == 100:
+        if cnt == break_cnt:
             break
+    average_score = sum_score / break_cnt
+    print('-')
+    print('Average BLEU is {:.2f}'.format(average_score))
+
+
+# %%
