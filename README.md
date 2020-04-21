@@ -49,11 +49,9 @@ python seq2seq_word_level_with_embedding
 - 英文预训练词向量下载：[GloVe pre-training vector](https://nlp.stanford.edu/projects/glove/)
 - 中文预训练词向量下载：[Chinese Word Vectors 中文词向量(使用字向量)](https://github.com/Embedding/Chinese-Word-Vectors)
 - 训练翻译模型和训练词向量的数据集：[WMT 2020数据集](http://www.statmt.org/wmt20/translation-task.html)
-
-## 其他参考
-
 - [真正的完全图解Seq2Seq Attention模型](https://zhuanlan.zhihu.com/p/40920384)
 - Tensorflow attention官方例子：[基于注意力的神经机器翻译](https://www.tensorflow.org/tutorials/text/nmt_with_attention)
+- BLEU：[A Gentle Introduction to Calculating the BLEU Score for Text in Python](https://machinelearningmastery.com/calculate-bleu-score-for-text-python/)
 
 ## License
 
