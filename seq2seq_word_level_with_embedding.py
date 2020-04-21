@@ -1,6 +1,6 @@
 # %%
 # coding: utf-8
-# ### Neural Machine Translation using word level language model and embeddings in Keras
+# Neural Machine Translation using word level language model and embeddings in Keras
 from nltk.translate.bleu_score import sentence_bleu
 import math
 import time
@@ -19,7 +19,7 @@ import re
 # from sklearn.cross_validation import train_test_split
 
 UNIT_OUTPUT = 256
-SAMPLES = 100
+SAMPLES = 10000
 EPOCH = 100
 BATCH_SIZE = 32
 
@@ -27,7 +27,7 @@ BATCH_SIZE = 32
 def createCmn():
     lines = pd.read_table(
         'data/cmn.txt', names=['eng', 'zh', '_'],
-        nrows=SAMPLES,  # used for debug
+        # nrows=SAMPLES,  # used for debug
     )
     lines.zh = lines.zh.astype(str)
     lines.eng = lines.eng.astype(str)
@@ -341,7 +341,7 @@ if __name__ == "__main__":
         for t, word in enumerate(input_text.split()):
             encoder_input_data[0, t] = input_token_index[word]
         decoded_sentence = decode_sequence(encoder_input_data)
-
+        # compute BLEU score
         reference = lines.zh[i].split()
         reference = [reference[1:-1]]
         candidate = [e for e in decoded_sentence]
