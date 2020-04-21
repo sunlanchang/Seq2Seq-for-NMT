@@ -14,18 +14,18 @@ import string
 from string import digits
 # import matplotlib.pyplot as plt
 import re
-from sklearn.cross_validation import train_test_split
+# from sklearn.cross_validation import train_test_split
 
 UNIT_OUTPUT = 256
-SAMPLES = 10000
-EPOCH = 1000
+SAMPLES = 100
+EPOCH = 100
 BATCH_SIZE = 32
 
 
 def createCmn():
     lines = pd.read_table(
         'data/cmn.txt', names=['eng', 'zh', '_'],
-        # nrows=SAMPLES,  # used for debug
+        nrows=SAMPLES,  # used for debug
     )
     lines.zh = lines.zh.astype(str)
     lines.eng = lines.eng.astype(str)
@@ -179,9 +179,9 @@ def createEmbedding():
 def createModel():
     encoder_inputs = Input(shape=(None,))
     # 300为预训练embedding的特征维度
-    embedding_matrix_en, embedding_matrix_zh = createEmbedding()
+    # embedding_matrix_en, embedding_matrix_zh = createEmbedding()
     en_x = Embedding(num_encoder_tokens, 300,
-                     weights=[embedding_matrix_en],
+                     #  weights=[embedding_matrix_en],
                      trainable=False)(encoder_inputs)
     encoder = LSTM(UNIT_OUTPUT, return_state=True)
     encoder_outputs, state_h, state_c = encoder(en_x)
@@ -191,7 +191,7 @@ def createModel():
     # Set up the decoder, using `encoder_states` as initial state.
     decoder_inputs = Input(shape=(None,))
     embedding = Embedding(num_decoder_tokens, 300,
-                          weights=[embedding_matrix_zh],
+                          #   weights=[embedding_matrix_zh],
                           trainable=False)
     final_dex = embedding(decoder_inputs)
     decoder_lstm = LSTM(UNIT_OUTPUT, return_sequences=True, return_state=True)
@@ -316,18 +316,18 @@ if __name__ == "__main__":
     plot_model(to_file='img/encoder.png', model=encoder_model)
     plot_model(to_file='img/decoder.png', model=decoder_model)
 
-    checkpoint = ModelCheckpoint("checkpoint/after500_epoch_{epoch:02d}.hdf5", monitor='val_loss', verbose=0,
+    checkpoint = ModelCheckpoint("checkpoint/epoch_{epoch:02d}.hdf5", monitor='val_loss', verbose=0,
                                  save_best_only=False, mode='auto', period=20)
     LearningRate = LearningRateScheduler(scheduler, verbose=0)
 
-    # model.load_weights('checkpoint/epoch_500.hdf5')  # slc
     print('learning rate: ', K.eval(model.optimizer.lr))  # 学习率0.001
-    # 加载模型的检查点
     # 数据量多的时候用fit_generator
     model.fit_generator(generate_batch(lines.eng, lines.zh, batch_size=BATCH_SIZE),
                         steps_per_epoch=lines.shape[0] // BATCH_SIZE,
                         epochs=EPOCH,
                         callbacks=[checkpoint, LearningRate])
+    # 加载模型的检查点
+    # model.load_weights('checkpoint/epoch_500.hdf5')  # slc
 
     # 模型预测方法
     encoder_input_data = np.zeros((1, max_len_en), dtype='float32')
