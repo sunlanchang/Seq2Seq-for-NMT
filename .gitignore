@@ -1,5 +1,6 @@
 checkpoint/*
 data/*
+!data/cmn.txt
 !data/script/
 
 word2vec/*
